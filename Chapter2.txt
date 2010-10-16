@@ -36,10 +36,38 @@ resultに入ってる値は「見つかった場合はそのインデックス /
 <入力> A,Bという二つのビットによる配列を受け取り、
 <出力> その和の配列を出力する
 |<
+とりあえず、Pythonで実装してみました。こんな感じで大丈夫でしょうか？
+>|python|
+def harfAdder(a, b):
+    s = a ^ b
+    c = a & b
+    return (c,s)
 
-|*  |*1|*0|
-|*1 |0 |1 |
-|*0 |1 |0 |
+def fullAdder(a,b,x):
+    (c1, s1) = harfAdder(a,b)
+    (c2, s2) = harfAdder(s1,x)
+    return ((c1|c2),s2)
+
+def plus(seq1, seq2):
+    seq1.reverse()
+    seq2.reverse()
+    c = 0
+    n = len(seq1)
+    i = 0
+    results = []
+    while i<n :
+        a = seq1[i]
+        b = seq2[i]
+        (c1,s) = fullAdder(a,b,c)
+        c = c1
+        print c
+        results.append(s)
+        i=i+1
+    results.append(c)
+    results.reverse()
+    return results
+||<
+
 
 >||
 add-binary-string(A,B)
@@ -52,5 +80,3 @@ add-binary-string(A,B)
   	while i <- 0 to lngth
 	      result[i] <- A[i] + B[i]
  ||<
-
-という
