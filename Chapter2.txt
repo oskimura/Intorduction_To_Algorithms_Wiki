@@ -36,7 +36,7 @@ resultに入ってる値は「見つかった場合はそのインデックス /
 <入力> A,Bという二つのビットによる配列を受け取り、
 <出力> その和の配列を出力する
 |<
-とりあえず、Pythonで実装してみました。こんな感じで大丈夫でしょうか？
+とりあえず、Pythonで実装してみました。こんな回答で大丈夫か？
 >|python|
 def harfAdder(a, b):
     s = a ^ b
@@ -68,15 +68,36 @@ def plus(seq1, seq2):
     return results
 ||<
 
+* 2.3 アルゴリズムの設計
+この 
+Merge-Sort
+>|lua|
+function merge(A,p,q,r)
+   n1 = q-p+1
+   n2 = r-q
+   L = {}
+   R = {}
 
->||
-add-binary-string(A,B)
-	length <- 0
-	if len[A] < len[B] 
-	   length <- len[A]
-	else
-	   length <- len[B]
-	result
-  	while i <- 0 to lngth
-	      result[i] <- A[i] + B[i]
- ||<
+   for i=1, n1 do
+      L[i] = A[p+i-1]
+   end
+   for j=1, n2 do
+      R[j] = A[q+j]
+   end
+
+   L[n1+1] = nil
+   R[n2+1] = nil
+   i = 1
+   j = 1
+   for k=p, r do
+      if L[i] <= L[j] then
+	 A[k] = L[i]
+	 i = i+1
+      else
+	 A[k] = R[j]
+	 j = j+1
+      end
+   end
+   return A
+end
+||<
