@@ -68,15 +68,16 @@ def plus(seq1, seq2):
     return results
 ||<
 
-* 2.3 アルゴリズムの設計
-この 
-Merge-Sort
+* 2.3 アルゴリズムの設計 
+ちなみにこのMerge処理は旧版だと演習になっていた
 >|lua|
 function merge(A,p,q,r)
+
    n1 = q-p+1
    n2 = r-q
    L = {}
    R = {}
+   print("n1",n1,"n2",n2)
 
    for i=1, n1 do
       L[i] = A[p+i-1]
@@ -85,15 +86,75 @@ function merge(A,p,q,r)
       R[j] = A[q+j]
    end
 
-   L[n1+1] = nil
-   R[n2+1] = nil
+   L[n1+1] = 0xffff
+   R[n2+1] = 0xffff
    i = 1
    j = 1
+
+   print(R[j])
+   print(L[i])
+   print("p",p,"q",q,"r",r)
+
    for k=p, r do
-      if L[i] <= L[j] then
+      print(i,j,k)
+      if L[i] <= R[j] then
+
 	 A[k] = L[i]
 	 i = i+1
       else
+
+	 A[k] = R[j]
+	 j = j+1
+      end
+   end
+   return A
+end
+||<
+
+MegerSort
+>|lua|
+function mergeSort(A,p,r)
+   if p<r then
+      q = math.floor((p+r)/2)
+      mergeSort(A,p,q)
+      mergeSort(A,q+1,r)
+      merge1(A,p,q,r)
+   end
+   return A
+end
+||<
+
+*演習問題
+** 演習2.3-1
+** 演習2.3-2
+>|lua|
+function merge1(A,p,q,r)
+   n1 = q-p+1
+   n2 = r-q
+   L = {}
+   R = {}
+   for i=1, n1 do
+      L[i] = A[p+i-1]
+   end
+   for j=1, n2 do
+      R[j] = A[q+j]
+   end
+
+   i = 1
+   j = 1
+
+   for k=p, r do
+      print(i,j,k)
+      if  j>n2 then
+	 A[k] = L[i]
+	 i = i+1
+      elseif i>n1 then
+	 A[k] = R[j]
+	 j = j+1	    
+      elseif (L[i] <= R[j] ) then
+	 A[k] = L[i]
+	 i = i+1
+      elseif i>=n1 or L[i] > R[j]  then
 	 A[k] = R[j]
 	 j = j+1
       end
