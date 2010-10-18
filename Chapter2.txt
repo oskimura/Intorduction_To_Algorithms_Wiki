@@ -12,10 +12,11 @@ linear-search(A,x)
 |<
 
 
-というコードを考えた場合に
+というコードを考えた場合
+>|
 Aはnullでは無い事とAの中にxが二個以上存在した場合に任意のインデックスを返していい事にする
 resultに入ってる値は「見つかった場合はそのインデックス /\ 見つらなかった場合は0」とする
->|
+
 - 初期条件：
 	プログラムの二行目の段階で resultには0が代入されている。
 	この時点では探索は行われておらず、もちろん値は見つかっていないので、
@@ -69,7 +70,7 @@ def plus(seq1, seq2):
 ||<
 
 * 2.3 アルゴリズムの設計 
-ちなみにこのMerge処理は旧版だと演習になっていた
+ちなみにこのMerge処理は旧版だと演習になっていた(あとMergeSortのあたりはluaで実装)
 >|lua|
 function merge(A,p,q,r)
 
@@ -126,6 +127,7 @@ end
 
 *演習問題
 ** 演習2.3-1
+実はこれ旧版の方には絵が載ってるs	
 ** 演習2.3-2
 >|lua|
 function merge1(A,p,q,r)
@@ -144,7 +146,6 @@ function merge1(A,p,q,r)
    j = 1
 
    for k=p, r do
-      print(i,j,k)
       if  j>n2 then
 	 A[k] = L[i]
 	 i = i+1
@@ -162,3 +163,7 @@ function merge1(A,p,q,r)
    return A
 end
 ||<
+
+** 2.3-3
+
+[TeX:{\Huge e^{i\pi}=-1}]
