@@ -70,10 +70,12 @@ def plus(seq1, seq2):
 ||<
 
 * 2.3 アルゴリズムの設計 
-ちなみにこのMerge処理は旧版だと演習になっていた(あとMergeSortのあたりはluaで実装)
+MergeSortを例にとって再帰的アルゴリズムの設計、証明、解析を行っています。
+
+** Merge
+ちなみにこのMerge処理は旧版だと演習になっていてこの擬似コードは載っていなかった(あとMergeSortのあたりはluaで実装)
 >|lua|
 function merge(A,p,q,r)
-
    n1 = q-p+1
    n2 = r-q
    L = {}
@@ -92,10 +94,6 @@ function merge(A,p,q,r)
    i = 1
    j = 1
 
-   print(R[j])
-   print(L[i])
-   print("p",p,"q",q,"r",r)
-
    for k=p, r do
       print(i,j,k)
       if L[i] <= R[j] then
@@ -112,7 +110,7 @@ function merge(A,p,q,r)
 end
 ||<
 
-MegerSort
+** MegerSort
 >|lua|
 function mergeSort(A,p,r)
    if p<r then
@@ -127,7 +125,7 @@ end
 
 *演習問題
 ** 演習2.3-1
-実はこれ旧版の方には絵が載ってるs	
+実はこれ旧版の方には絵が載ってる
 ** 演習2.3-2
 >|lua|
 function merge1(A,p,q,r)
@@ -166,4 +164,10 @@ end
 
 ** 2.3-3
 
-[tex:{\Huge e^{i\pi}=-1}]
+[http://www.codecogs.com/eqnedit.php?latex=f(n) = \left\{ \begin{array}{ll} \theta(1) & n \leq c \\ aT(n/b)@plus;D(n)@plus;C(n) & otherwise \\ \end{array} \right." target="_blank"><img src="http://latex.codecogs.com/gif.latex?f(n) = \left\{ \begin{array}{ll} \theta(1) & n \leq c \\ aT(n/b)+D(n)+C(n) & otherwise \\ \end{array} \right." title="f(n) = \left\{ \begin{array}{ll} \theta(1) & n \leq c \\ aT(n/b)+D(n)+C(n) & otherwise \\ \end{array} \right.":title=tex]
+[tex:
+  f(n) = \left\{ \begin{array}{ll}
+  \theta(1) & n \leq c \\    
+  aT(n/b)+D(n)+C(n) & otherwise \\
+  \end{array} \right.
+]
