@@ -166,4 +166,4 @@ end
 
 ** 2.3-3
 
-[TeX:{\Huge e^{i\pi}=-1}]
+[teX:{\Huge e^{i\pi}=-1}]
