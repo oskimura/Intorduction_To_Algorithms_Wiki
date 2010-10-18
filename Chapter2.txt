@@ -164,7 +164,8 @@ end
 
 ** 2.3-3
 
-[http://www.codecogs.com/eqnedit.php?latex=f(n) = \left\{ \begin{array}{ll} \theta(1) & n \leq c \\ aT(n/b)@plus;D(n)@plus;C(n) & otherwise \\ \end{array} \right." target="_blank"><img src="http://latex.codecogs.com/gif.latex?f(n) = \left\{ \begin{array}{ll} \theta(1) & n \leq c \\ aT(n/b)+D(n)+C(n) & otherwise \\ \end{array} \right." title="f(n) = \left\{ \begin{array}{ll} \theta(1) & n \leq c \\ aT(n/b)+D(n)+C(n) & otherwise \\ \end{array} \right.":title=tex]
+[http://www.sitmo.com/gg/latex/latex2png.2.php?z=100&eq=%20%20f(n)%20%3D%20\left\{%20\begin{array}{ll}%0A%20%20\theta(1)%20%26%20n%20\leq%20c%20\\%20%20%20%20%0A%20%20aT(n/b)%2BD(n)%2BC(n)%20%26%20otherwise%20\\%0A%20%20\end{array}%20\right.%0A:title=tex]
+
 [tex:
   f(n) = \left\{ \begin{array}{ll}
   \theta(1) & n \leq c \\    
