@@ -71,15 +71,21 @@ def plus(seq1, seq2):
 
 * 2.3 アルゴリズムの設計 
 MergeSortを例にとって再帰的アルゴリズムの設計、証明、解析を行っています。
-[http://www.sitmo.com/gg/latex/latex2png.2.php?z=100&eq=%20%20f(n)%20%3D%20\left\{%20\begin{array}{ll}%0A%20%20\theta(1)%20%26%20n%20\leq%20c%20\\%20%20%20%20%0A%20%20aT(n/b)%2BD(n)%2BC(n)%20%26%20otherwise%20\\%0A%20%20\end{array}%20\right.%0A:title=tex]
-
+再帰関数を漸化式で表現する場合の式は次の様になるそうです
+[http://www.sitmo.com/gg/latex/latex2png.2.php?z=100&eq=%20%20T(n)%20%3D%20\left\{%20\begin{array}{ll}%0A%20%20\theta(1)%20%26%20n%20\leq%20c%20\\%20%20%20%20%0A%20%20aT(n/b)%2BD(n)%2BC(n)%20%26%20otherwise%20\\%0A%20%20\end{array}%20\right.%0A:title=tex]
 [tex:
-  f(n) = \left\{ \begin{array}{ll}
+  T(n) = \left\{ \begin{array}{ll}
   \theta(1) & n \leq c \\    
   aT(n/b)+D(n)+C(n) & otherwise \\
   \end{array} \right.
 ]
-
+この式自体も再帰的に定義されていますって漸化式だから当たり前ですが。
+上のΘ(1)は問題がある大きさ(c)以下で定数しか掛からない場合。すなわち再帰の基底条件です。
+下の式は(分割した問題にかかる時間)+(分割にかかる時間)+(結合にかかる時間)となっています。
+D(n)、C(n)はそれぞれ、問題は分割、統治にかかる時間
+aとbはそれぞれ、分割されたサイズと分割する個数である。
+aT(n/b)の部分は再帰的によばれます。
+本文ではあとの方にこれがどのように展開されるかの図が出てきます。
 
 
 ** Merge
@@ -183,16 +189,111 @@ nが2の冪乗の時
 ]	
 の解がT(n) = n*lg(n) であることを証明
 >|
-T(n)==2*lg(2)についてn=2^(k-1)について等しければ
-T(n)==2*lg(2)についてn=2^(k)について等しいと仮定する
-- 基底条件について証明
-	2^1=n=2の時はT(2)=2である 2*lg(2)=２であり等しい
-- 次にその他の場合について
-	T(n)==2*lg(n)についてn=2^(2)=4とした場合、n=k^(2-1)のとき2=2^(2-1)なる
-	2^(1+1)=4の時はT(4)の場合2*2+4=8となり 4*lg(4)=8であり等しい
+これは例の通りにツリーの各レベルのでの計算時間nである事を求め、
+ツリーの成長速度がlg(n)である求め、かければ"n lg(n)"になっているって方法で証明できる
+
+ところで漸化式が総和の形になるのは総和自体が帰納的に定義できるからと思った
+
 |<
 う〜んこんな答えで大丈夫か？
-ここでいってる証明ってWell-Foundな性質を用いて証明するんだよね。
 
 ** 演習2.3-4
 再帰版insertion Sortについて実行時間を漸化式で記述する
+再帰という事でとりあえずSchemeで
+>|Scheme|
+(define (insert e xs)
+  (let loop ((xs xs))                            ; T (n*n-1)
+    (if (null? xs)                               ; T (n*n-1)/2
+    	  e                                      ; T (1)
+        (if (< e (car xs))                       ; T (n*n-1)
+            (cons e xs)                          ; T (n*n-1)
+            (cons (car xs) (loop (cdr xs)))))))  ; T (n*n-1
+(define (insert-sort xs)
+  (let1 (rest (cdr xs))                                ; T (1)  
+        (let loop ((xs xs))                            ; T (n-1) ここで分割
+          (cond ((null? xs)                            ; T (n-1)
+		 '())                                  ; T (1)
+                (insert (car xs) (loop (cdr xs)))))))  ; T (n-1) ここで挿入及び結合
+||<
+これの計算量を漸化式で記述する
+[http://www.sitmo.com/gg/latex/latex2png.2.php?z=100&eq=%20%20T(n)%20%3D%20\left\{%20\begin{array}{ll}%0A%20%20\theta(1)%20%26%20n%20\leq%20c%20\\%20%20%20%20%0A%20%20aT(n/b)%2BD(n)%2BC(n)%20%26%20otherwise%20\\%0A%20%20\end{array}%20\right.%0A:title=tex]
+[tex:
+  T(n) = \left\{ \begin{array}{ll}
+  \theta(1) & n \leq c \\    
+  aT(n/b)+D(n)+C(n) & otherwise \\
+  \end{array} \right.
+]
+>|
+上記の式の定数a,b,cについてそれぞれ定義する
+T(n-1)+D(n)+C(n)
+
+a
+b=
+c=1と定義
+
+|<
+** 演習2.3-5
+二分探索を書いて、その計算量の最悪を求める
+>|lua|
+function binSearch(A,l,n,x)
+   m = l+math.floor((n-l)/2)
+   if A[m] == x  then
+      return m
+   elseif n-l < 1 then
+      return false
+   else
+      tmp1 = binSearch(A,l,m,x)
+      if not tmp1 == false then
+	 return tmp1
+      end
+      tmp2 = binSearch(A,m+1,n,x)
+      if not tmp2 == false then
+	 return tmp2
+      end
+   end
+end
+||<
+
+
+
+** 演習2.3-6
+insertion-Sort の挿入を二分探索をつかって改善すればn*log(n)になるか
+探索log(n)にしても挿入に計算量がかかるので(最悪の場合はnかかる)n*log(n)にはならないと思う
+(2分ツリーみたいに挿入をlog(n)にするデータ構造を作れば話はべつのはず)
+
+
+
+** 2.3-7
+S={a_1,a_2...,a_n} forall m,n:S,forall m:Int =>m+n=x
+を求めるアルゴリズムをΘ(n lg(n))で記述 
+これってm!=nという条件が入るかによって変わってくるけど、今回は考えずに書きました
+
+>|lua|
+table1 = {}
+function SearuchPlus(A,x)
+   n = table.maxn(A)
+   for i=1,x do
+      table1[i] = false
+   end
+   return search(A,1,n,x)
+end
+
+function search (A,p,r,x)
+   print(p,r,x)
+   if p<r then
+      q = math.floor((p+r)/2)
+      search(A,p,q,x)
+      search(A,q+1,r,x)
+      for i=p,r do
+	 if table1[(x-A[i])] and  table1[A[i]] then
+	    return true
+	 end
+      end
+      return false
+   end
+   table1[A[p]] = true
+  return false
+end
+||<
+
+
