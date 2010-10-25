@@ -200,7 +200,8 @@ nが2の冪乗の時
 ** 演習2.3-4
 再帰版insertion Sortについて実行時間を漸化式で記述する
 再帰という事でとりあえずSchemeで
->|Scheme|
+
+>|scheme|
 (define (insert e xs)
   (let loop ((xs xs))                            ; T (n*n-1)
     (if (null? xs)                               ; T (n*n-1)/2
@@ -215,6 +216,7 @@ nが2の冪乗の時
 		 '())                                  ; T (1)
                 (insert (car xs) (loop (cdr xs)))))))  ; T (n-1) ここで挿入及び結合
 ||<
+
 これの計算量を漸化式で記述する
 [http://www.sitmo.com/gg/latex/latex2png.2.php?z=100&eq=%20%20T(n)%20%3D%20\left\{%20\begin{array}{ll}%0A%20%20\theta(1)%20%26%20n%20\leq%20c%20\\%20%20%20%20%0A%20%20aT(n/b)%2BD(n)%2BC(n)%20%26%20otherwise%20\\%0A%20%20\end{array}%20\right.%0A:title=tex]
 [tex:
@@ -263,7 +265,7 @@ insertion-Sort の挿入を二分探索をつかって改善すればn*log(n)に
 
 
 
-** 2.3-7
+** 演習2.3-7
 S={a_1,a_2...,a_n} forall m,n:S,forall m:Int =>m+n=x
 を求めるアルゴリズムをΘ(n lg(n))で記述 
 これってm!=nという条件が入るかによって変わってくるけど、今回は考えずに書きました
