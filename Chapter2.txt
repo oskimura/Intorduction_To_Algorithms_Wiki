@@ -201,7 +201,7 @@ nが2の冪乗の時
 再帰版insertion Sortについて実行時間を漸化式で記述する
 再帰という事でとりあえずSchemeで
 
->|scheme|
+>||
 (define (insert e xs)
   (let loop ((xs xs))                            ; T (n*n-1)
     (if (null? xs)                               ; T (n*n-1)/2
